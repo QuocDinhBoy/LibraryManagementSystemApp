@@ -1,32 +1,32 @@
 package com.example.librarymanagementsystemapp;
 
 public class Document {
-        private String id;
-        private String name;
+        private int id;
+        private String title;
         private String author;
         private int quantity;
 
-        public Document(String id, String name, String author, int quantity) {
+        public Document(int id, String title, String author, int quantity) {
             this.id = id;
-            this.name = name;
+            this.title = title;
             this.author = author;
             this.quantity = quantity;
         }
 
-        public String getId() {
+        public int getId() {
             return id;
         }
 
-        public void setId(String id) {
+        public void setId(int id) {
             this.id = id;
         }
 
-        public String getName() {
-            return name;
+        public String getTitle() {
+            return title;
         }
 
-        public void setName(String name) {
-            this.name = name;
+        public void setTitle(String name) {
+            this.title = name;
         }
 
         public String getAuthor() {

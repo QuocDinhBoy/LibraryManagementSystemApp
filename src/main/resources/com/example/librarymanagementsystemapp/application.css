@@ -57,6 +57,9 @@
     -fx-text-fill:#fff;
     -fx-font-family:"Arial";
 }
+.table-view .table-cell{
+    -fx-alignment: CENTER;
+}
 .top-form{
     -fx-background-color:#fff;
     -fx-border-color:#000;
@@ -152,4 +155,40 @@
 }
 .clear-btn:hover{
     -fx-background-color:#ae23a2;
+}
+.red-bg{
+    -fx-background-color:#FF6347;
+    -fx-background-radius:8px;
+}
+.green-bg{
+    -fx-background-color:#3CB371;
+    -fx-background-radius:8px;
+}
+.date-picker {
+    -fx-border-color: red;
+    -fx-background-color: white;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+.date-picker > .arrow-button > .arrow {
+    -fx-background-color: red;
+}
+
+.date-picker > .arrow-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.date-picker > .arrow-button:hover > .arrow {
+    -fx-background-color: darkred;
+}
+.date-picker .text-field {
+    -fx-text-fill: red;
+    -fx-alignment: center;
+}
+.textfield {
+    -fx-background-color: transparent; /* Làm nền trong suốt */
+    -fx-border-color: transparent;    /* Ẩn viền */
+    -fx-focus-color: transparent;     /* Ẩn viền khi TextField được chọn */
+    -fx-faint-focus-color: transparent; /* Ẩn hiệu ứng focus mờ */
 }
