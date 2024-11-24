@@ -109,7 +109,7 @@
     -fx-border-radius:4px;
 }
 .textfield:focused{
-     -fx-border-color:linear-gradient(to bottom right, #4f937a, #6e2731)
+     -fx-border-color:linear-gradient(to bottom right, #4f937a, #6e2731);
      -fx-border-width: 1.8px;
 }
 .add-btn{
@@ -164,6 +164,10 @@
     -fx-background-color:#3CB371;
     -fx-background-radius:8px;
 }
+.blue-bg{
+    -fx-background-color:#0099FF;
+    -fx-background-radius:8px;
+}
 .date-picker {
     -fx-border-color: red;
     -fx-background-color: white;
@@ -186,9 +190,41 @@
     -fx-text-fill: red;
     -fx-alignment: center;
 }
-.textfield {
-    -fx-background-color: transparent; /* Làm nền trong suốt */
-    -fx-border-color: transparent;    /* Ẩn viền */
-    -fx-focus-color: transparent;     /* Ẩn viền khi TextField được chọn */
-    -fx-faint-focus-color: transparent; /* Ẩn hiệu ứng focus mờ */
+.text {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+.issue-btn {
+    -fx-background-color:#FF0000
+}
+.issue-btn:hover{
+    -fx-background-color:#CC0000
+}
+.return-btn{
+    -fx-background-color:#83C75D
+}
+.return-btn:hover{
+    -fx-background-color:#50A625;
+    -fx-background-radius: 8px;
+}
+.delete2-btn{
+    -fx-background-color:#FF3333;
+    -fx-background-radius: 8px;
+}
+.delete2-btn:hover{
+    -fx-background-color:#CC0000;
+}
+.blue-bg{
+    -fx-background-color:#00CC99;
+    -fx-background-radius:8px;
+}
+.view-records-btn{
+    -fx-background-color:transparent;
+    -fx-cursor:hand;
+}
+.view-records-form{
+    -fx-background-color:linear-gradient(to bottom right, #4f937a, #6e2731);
+    -fx-background-radius:8px;
 }

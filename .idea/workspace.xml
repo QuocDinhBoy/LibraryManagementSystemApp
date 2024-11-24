@@ -5,11 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ee85c5d4-79d4-40a4-b2dd-b8f6578f8f47" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/Borrower.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/BorrowTransaction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/Document.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/Document.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/HelloApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/centerSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/centerSceneController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/application.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/application.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/centerScene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/centerScene.fxml" afterDir="false" />
@@ -48,19 +45,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.HelloApplication.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Code/Java/LibraryManagementSystemApp",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Code/Java/LibraryManagementSystemApp&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Code\Java\LibraryManagementSystemApp\src\main\resources\com\example\librarymanagementsystemapp" />
