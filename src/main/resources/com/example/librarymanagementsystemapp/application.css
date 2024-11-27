@@ -228,3 +228,29 @@
     -fx-background-color:linear-gradient(to bottom right, #4f937a, #6e2731);
     -fx-background-radius:8px;
 }
+.start-home-btn{
+    -fx-cursor:hand;
+    -fx-font-size:14px;
+    -fx-text-fill:#fff;
+    -fx-alignment:CENTER-LEFT;
+    -fx-background-color:linear-gradient(to bottom right, #52ae8b, #9a2d3d);
+}
+.start-allrecords-btn{
+    -fx-background-color:linear-gradient(to bottom right, #52ae8b, #9a2d3d);
+    -fx-background-radius:8px;
+}
+.image {
+    -fx-border-color:#000;
+}
+.delete3-button{
+    -fx-background-color:transparent;
+}
+.delete3-button:hover{
+    -fx-background-color:red;
+}
+.home-bg-top{
+    -fx-background-color:linear-gradient(to right, #3b534c, #437a72);
+}
+.transparent{
+    -fx-background-color: rgba(0, 0, 0, 0);
+}

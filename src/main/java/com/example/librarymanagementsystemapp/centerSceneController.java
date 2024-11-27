@@ -8,22 +8,35 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
+import javax.print.Doc;
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
-import java.util.Optional;
-import java.util.ResourceBundle;
-import java.util.SortedMap;
+import java.sql.Date;
+import java.util.*;
+import java.util.List;
 
 public class centerSceneController implements Initializable {
     private Stage stage;
@@ -35,7 +48,14 @@ public class centerSceneController implements Initializable {
     private ResultSet result;
     private ObservableList<Document> addDocumentlist;
     private ObservableList<Borrower> borrowerList;
-    ObservableList<BorrowTransaction> borrowerTransactionList;
+    private ObservableList<BorrowTransaction> borrowerTransactionList;
+    private ObservableList<BorrowTransaction> borrowTransactionList;
+    private Image image;
+    private String path;
+    private int checkViewRecords = 0;
+    private static final int AllRecords = 0;
+    private static final int IssuedList = 1;
+    private static final int DefaulterList = 2;
 
     @FXML
     private AnchorPane add_form;
@@ -99,7 +119,6 @@ public class centerSceneController implements Initializable {
 
     @FXML
     private AnchorPane home_form;
-
 
     @FXML
     private TextField borrowers_ID;
@@ -255,6 +274,21 @@ public class centerSceneController implements Initializable {
     private TableColumn<BorrowTransaction, Date> returnDate_viewRecords;
 
     @FXML
+    private ImageView imageView_manageDocument;
+
+    @FXML
+    private Label availableDocuments_home;
+
+    @FXML
+    private Label issuedDocument_home;
+
+    @FXML
+    private Label totalBorrowers_home;
+
+    @FXML
+    private GridPane documentContainer;
+
+    @FXML
     public void switchLoginScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("loginScene.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -294,12 +328,18 @@ public class centerSceneController implements Initializable {
             returnDocument_form.setVisible(false);
             viewRecords_form.setVisible(false);
 
+
             home_button.setStyle("-fx-background-color:linear-gradient(to bottom right, #52ae8b, #9a2d3d);");
             addDocument_button.setStyle("-fx-background-color:transparent");
             borrowers_button.setStyle("-fx-background-color:transparent");
             issueDocument_button.setStyle("-fx-background-color:transparent");
             returnDocument_button.setStyle("-fx-background-color:transparent");
             viewRecords_button.setStyle("-fx-background-color:transparent");
+
+            availableDocuments_home();
+            issuedDocuments_home();
+            totalBorrowers_home();
+            hottest_home();
 
         } else if (event.getSource() == addDocument_button) {
             home_form.setVisible(false);
@@ -381,6 +421,10 @@ public class centerSceneController implements Initializable {
             issueDocument_button.setStyle("-fx-background-color:transparent");
             returnDocument_button.setStyle("-fx-background-color:transparent");
             viewRecords_button.setStyle("-fx-background-color:linear-gradient(to bottom right, #52ae8b, #9a2d3d);");
+
+            showBorrowTransactionList();
+            borrowTransactionList = getViewRecords();
+            tableView_viewRecords.setItems(borrowTransactionList);
         }
     }
 
@@ -399,7 +443,8 @@ public class centerSceneController implements Initializable {
                 document = new Document(result.getInt("document_id"),
                         result.getString("title"),
                         result.getString("author"),
-                        result.getInt("quantity"));
+                        result.getInt("quantity"),
+                         result.getString("image"));
                 documents.add(document);
             }
         } catch (Exception e) {
@@ -423,7 +468,7 @@ public class centerSceneController implements Initializable {
     }
 
     public void manageDocument_addButton() {
-        String sql = "INSERT INTO document (document_id, title, author, quantity) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO document (document_id, title, author, quantity, image) VALUES(?,?,?,?,?)";
 
         Database connectNow = new Database();
         connect = connectNow.getConnection();
@@ -469,13 +514,16 @@ public class centerSceneController implements Initializable {
                     alert.showAndWait();
                     return;
                 }
-
+                if (path != null) {
+                    path = path.replace("\\", "/");
+                }
                 prepare = connect.prepareStatement(sql);
 
                 prepare.setInt(1, id);
                 prepare.setString(2, add_Title.getText());
                 prepare.setString(3, add_Author.getText());
                 prepare.setInt(4, quantity);
+                prepare.setString(5, path);
                 prepare.executeUpdate();
                 showListDocument();
                 manageDocument_clearButton();
@@ -493,10 +541,14 @@ public class centerSceneController implements Initializable {
     }
 
     public void manageDocument_updateButton() {
+        if (path != null) {
+            path = path.replace("\\", "/");
+        }
         String sql = "UPDATE document SET title = '"
                 + add_Title.getText() + "', author = '"
                 + add_Author.getText() + "', quantity = '"
-                + add_Quantity.getText() + "' WHERE document_id = '"
+                + add_Quantity.getText() + "', image = '"
+                + path + "' WHERE document_id = '"
                 + add_ID.getText() + "'";
         Database connectNow = new Database();
         connect = connectNow.getConnection();
@@ -626,6 +678,22 @@ public class centerSceneController implements Initializable {
         }
     }
 
+    public void manageDocument_importButton() {
+        FileChooser open = new FileChooser();
+        open.setTitle("Open Image File");
+        open.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image File", "*png", "*jpg"));
+
+        Stage stage = (Stage)add_form.getScene().getWindow();
+        File file = open.showOpenDialog(stage);
+
+        if (file != null) {
+            image = new Image(file.toURI().toString());
+            imageView_manageDocument.setImage(image);
+
+            path = file.getAbsolutePath();
+        }
+    }
+
     public void addDocumentSelected() {
         add_tableview.setOnMouseClicked(event -> {
             Document selectedDocument = add_tableview.getSelectionModel().getSelectedItem();
@@ -634,6 +702,10 @@ public class centerSceneController implements Initializable {
                 add_Title.setText(selectedDocument.getTitle());
                 add_Author.setText(selectedDocument.getAuthor());
                 add_Quantity.setText(String.valueOf(selectedDocument.getQuantity()));
+
+                String uri = "file:" + selectedDocument.getImage();
+                image = new Image(uri);
+                imageView_manageDocument.setImage(image);
             }
         });
     }
@@ -917,8 +989,9 @@ public class centerSceneController implements Initializable {
                 String title = result.getString("title");
                 String author = result.getString("author");
                 int quantity = result.getInt("quantity");
+                String image = result.getString("image");
 
-                document = new Document(id, title, author, quantity);
+                document = new Document(id, title, author, quantity, image);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -1144,6 +1217,7 @@ public class centerSceneController implements Initializable {
         borrowerNameColumn_returnDocument.setResizable(false);
         documentName_returnDocument.setResizable(false);
         issueDate_returnDocument.setResizable(false);
+        dueDate_viewRecords.setResizable(false);
         status_returnDocument.setResizable(false);
     }
 
@@ -1168,6 +1242,14 @@ public class centerSceneController implements Initializable {
                 alert.showAndWait();
                 return;
             }
+
+             if (transaction.getDueDate().before(new java.util.Date())) {
+                Alert overdueAlert = new Alert(Alert.AlertType.INFORMATION);
+                overdueAlert.setTitle("Overdue Return");
+                overdueAlert.setHeaderText("Document Returned Late");
+                overdueAlert.setContentText("This document was returned after the due date. Please ensure late fees are handled appropriately.");
+                overdueAlert.showAndWait();
+             }
 
             try {
                 String updateStatus = "UPDATE borrowtransaction SET status = 'returned', return_date = CURRENT_DATE WHERE borrowtransaction_id = '" + transaction.getTransactionId() + "'";
@@ -1220,35 +1302,314 @@ public class centerSceneController implements Initializable {
 
     public void viewRecordsSwitchForm(ActionEvent event) {
         if(event.getSource() == allRecords_button) {
-
-
+            checkViewRecords = AllRecords;
+            borrowTransactionList = getViewRecords();
             allRecords_button.setStyle("-fx-background-color:linear-gradient(to bottom right, #52ae8b, #9a2d3d);");
             issuedList_button.setStyle("-fx-background-color:transparent");
             defaulterList_button.setStyle("-fx-background-color:transparent");
         } else if(event.getSource() == issuedList_button) {
-
-
+            checkViewRecords = IssuedList;
+            borrowTransactionList = getIssuedList();
             allRecords_button.setStyle("-fx-background-color:transparent");
             issuedList_button.setStyle("-fx-background-color:linear-gradient(to bottom right, #52ae8b, #9a2d3d);");
             defaulterList_button.setStyle("-fx-background-color:transparent");
         } else if(event.getSource() == defaulterList_button) {
-
-
+            checkViewRecords = DefaulterList;
+            borrowTransactionList = getDefaulterList();
             allRecords_button.setStyle("-fx-background-color:transparent");
             issuedList_button.setStyle("-fx-background-color:transparent");
             defaulterList_button.setStyle("-fx-background-color:linear-gradient(to bottom right, #52ae8b, #9a2d3d);");
+        }
+        tableView_viewRecords.setItems(borrowTransactionList);
+    }
+
+    public ObservableList<BorrowTransaction> getViewRecords() {
+        ObservableList<BorrowTransaction> transactions = FXCollections.observableArrayList();
+
+
+        Database connectNow = new Database();
+        connect = connectNow.getConnection();
+        String sql = "SELECT bt.borrowtransaction_id, d.title AS document_name, " +
+                "b.name AS borrower_name, bt.borrow_date, bt.due_date, bt.status, bt.return_date " +
+                "FROM borrowtransaction bt " +
+                "JOIN document d ON bt.document_id = d.document_id " +
+                "JOIN borrower b ON bt.borrower_id = b.borrower_id ";
+        try {
+            statement = connect.createStatement();
+            result = statement.executeQuery(sql);
+            BorrowTransaction borrowTransaction;
+            while (result.next()) {
+                borrowTransaction = new BorrowTransaction(
+                        result.getInt("borrowtransaction_id"),
+                        result.getString("document_name"),
+                        result.getString("borrower_name"),
+                        result.getDate("borrow_date"),
+                        result.getDate("due_date"),
+                        result.getString("status"),
+                        result.getDate("return_date")
+                );
+                transactions.add(borrowTransaction);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return transactions;
+    }
+
+    public ObservableList<BorrowTransaction> getDefaulterList() {
+        ObservableList<BorrowTransaction> transactions = FXCollections.observableArrayList();
+
+
+        Database connectNow = new Database();
+        connect = connectNow.getConnection();
+        String sql = "SELECT bt.borrowtransaction_id, d.title AS document_name, " +
+                "b.name AS borrower_name, bt.borrow_date, bt.due_date, bt.status, bt.return_date " +
+                "FROM borrowtransaction bt " +
+                "JOIN document d ON bt.document_id = d.document_id " +
+                "JOIN borrower b ON bt.borrower_id = b.borrower_id " +
+                "WHERE (bt.due_date < CURRENT_DATE AND bt.status = 'pending') OR bt.return_date > bt.due_date ";
+        try {
+            statement = connect.createStatement();
+            result = statement.executeQuery(sql);
+            BorrowTransaction borrowTransaction;
+            while (result.next()) {
+                borrowTransaction = new BorrowTransaction(
+                        result.getInt("borrowtransaction_id"),
+                        result.getString("document_name"),
+                        result.getString("borrower_name"),
+                        result.getDate("borrow_date"),
+                        result.getDate("due_date"),
+                        result.getString("status"),
+                        result.getDate("return_date")
+                );
+                transactions.add(borrowTransaction);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return transactions;
+    }
+
+    public void showBorrowTransactionList() {
+        idColumn_viewRecords.setCellValueFactory(new PropertyValueFactory<>("transactionId"));
+        borrowerName_viewRecords.setCellValueFactory(new PropertyValueFactory<>("borrowerName"));
+        documentName_viewRecords.setCellValueFactory(new PropertyValueFactory<>("documentName"));
+        issueDate_ViewRecords.setCellValueFactory(new PropertyValueFactory<>("issueDate"));
+        dueDate_viewRecords.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
+        status_viewRecords.setCellValueFactory(new PropertyValueFactory<>("status"));
+        returnDate_viewRecords.setCellValueFactory(new PropertyValueFactory<>("returnDate"));
+
+        idColumn_viewRecords.setResizable(false);
+        borrowerName_viewRecords.setResizable(false);
+        documentName_viewRecords.setResizable(false);
+        issueDate_ViewRecords.setResizable(false);
+        dueDate_viewRecords.setResizable(false);
+        status_viewRecords.setResizable(false);
+        returnDate_viewRecords.setResizable(false);
+    }
+
+    public ObservableList<BorrowTransaction> getIssuedList() {
+        ObservableList<BorrowTransaction> transactions = FXCollections.observableArrayList();
+
+
+        Database connectNow = new Database();
+        connect = connectNow.getConnection();
+        String sql = "SELECT bt.borrowtransaction_id, d.title AS document_name, " +
+                "b.name AS borrower_name, bt.borrow_date, bt.due_date, bt.status, bt.return_date " +
+                "FROM borrowtransaction bt " +
+                "JOIN document d ON bt.document_id = d.document_id " +
+                "JOIN borrower b ON bt.borrower_id = b.borrower_id " +
+                "WHERE status = 'pending'";
+        try {
+            statement = connect.createStatement();
+            result = statement.executeQuery(sql);
+            BorrowTransaction borrowTransaction;
+            while (result.next()) {
+                borrowTransaction = new BorrowTransaction(
+                        result.getInt("borrowtransaction_id"),
+                        result.getString("document_name"),
+                        result.getString("borrower_name"),
+                        result.getDate("borrow_date"),
+                        result.getDate("due_date"),
+                        result.getString("status"),
+                        result.getDate("return_date")
+                );
+                transactions.add(borrowTransaction);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return transactions;
+    }
+
+    public void deleteButton_viewRecords() {
+        BorrowTransaction transaction = tableView_viewRecords.getSelectionModel().getSelectedItem();
+        if (transaction == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("No Selection");
+            alert.setHeaderText("No Transaction Selected");
+            alert.setContentText("Please select a transaction to delete.");
+            alert.showAndWait();
+            return;
+        }
+        Database connectNow = new Database();
+        Connection connect = connectNow.getConnection();
+
+        try {
+            String deleteTransaction = "DELETE FROM borrowtransaction WHERE borrowtransaction_id = '" + transaction.getTransactionId() + "'";
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Comfirmation Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Are you sure you want to delete this transaction ?");
+            Optional<ButtonType> option = alert.showAndWait();
+            if (option.get().equals(ButtonType.OK)) {
+                statement = connect.createStatement();
+                statement.executeUpdate(deleteTransaction);
+                if(checkViewRecords == AllRecords) {
+                    borrowTransactionList = getViewRecords();
+                } else if(checkViewRecords == IssuedList) {
+                    borrowTransactionList = getIssuedList();
+                } else if(checkViewRecords == DefaulterList) {
+                    borrowTransactionList = getDefaulterList();
+                }
+                tableView_viewRecords.setItems(borrowTransactionList);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void availableDocuments_home() {
+        String sql = "SELECT COUNT(document_id) FROM document";
+
+        Database connectNow = new Database();
+        connect = connectNow.getConnection();
+
+        try {
+            statement = connect.createStatement();
+            result = statement.executeQuery(sql);
+            int count = 0;
+            while (result.next()) {
+                count = result.getInt("COUNT(document_id)");
+            }
+            availableDocuments_home.setText(String.valueOf(count));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void issuedDocuments_home() {
+        String sql = "SELECT COUNT(borrowtransaction_id) FROM borrowtransaction WHERE status != 'returned'";
+
+        Database connectNow = new Database();
+        connect = connectNow.getConnection();
+
+        try {
+            statement = connect.createStatement();
+            result = statement.executeQuery(sql);
+            int count = 0;
+            while (result.next()) {
+                count = result.getInt("COUNT(borrowtransaction_id)");
+            }
+            issuedDocument_home.setText(String.valueOf(count));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void totalBorrowers_home() {
+        String sql = "SELECT COUNT(borrower_id) FROM borrower";
+
+        Database connectNow = new Database();
+        connect = connectNow.getConnection();
+
+        try {
+            statement = connect.createStatement();
+            result = statement.executeQuery(sql);
+            int count = 0;
+            while (result.next()) {
+                count = result.getInt("COUNT(borrower_id)");
+            }
+            totalBorrowers_home.setText(String.valueOf(count));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private List<Document> hotest;
+
+    private List<Document> documents() {
+        List<Document> documentList = new ArrayList<>();
+        String sql = "SELECT d.document_id, d.title, d.author, d.quantity, d.image, COUNT(bt.document_id) AS borrow_count " +
+                "FROM document d " +
+                "JOIN borrowtransaction bt ON d.document_id = bt.document_id " +
+                "GROUP BY d.document_id, d.title, d.author, d.quantity, d.image " +
+                "ORDER BY borrow_count DESC " +
+                "LIMIT 12";
+        Database connectNow = new Database();
+        Connection connect = connectNow.getConnection();
+
+        try {
+            Statement statement = connect.createStatement();
+            ResultSet result = statement.executeQuery(sql);
+
+            while (result.next()) {
+                Document document = new Document(
+                        result.getInt("document_id"),
+                        result.getString("title"),
+                        result.getString("author"),
+                        result.getInt("quantity"),
+                        result.getString("image")
+                );
+                documentList.add(document);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return documentList;
+    }
+
+    public void hottest_home() {
+        hotest = documents();
+        int column = 0;
+        int row = 1;
+
+        try {
+            for (Document document : hotest) {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("document.fxml"));
+                VBox documentBox = fxmlLoader.load();
+                DocumentController documentController = fxmlLoader.getController();
+                documentController.setData(document);
+                if(column == 4) {
+                    column = 0;
+                    ++row;
+                }
+
+                documentContainer.add(documentBox, column++, row);
+                GridPane.setMargin(documentBox, new Insets(7,15,20,25));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     @FXML
     public void initialize (URL Location, ResourceBundle resources) {
+        availableDocuments_home();
+        issuedDocuments_home();
+        totalBorrowers_home();
         showListDocument();
         showListBorrower();
         showBorrowerTransactionList();
+        showBorrowTransactionList();
         addDocumentSelected();
         borrowersSelected();
         search();
         borrowers_search();
         printDetails();
+        hottest_home();
     }
+
 }

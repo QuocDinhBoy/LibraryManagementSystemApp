@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -12,6 +13,8 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
@@ -64,7 +67,7 @@
                                  </font>
                               </Label>
                               <Line endX="100.0" layoutX="84.0" layoutY="186.0" startX="-66.40000915527344" startY="-1.52587890625E-5" stroke="WHITE" />
-                              <Button fx:id="home_button" layoutX="10.0" layoutY="222.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@application.css" text="Home">
+                              <Button fx:id="home_button" layoutX="10.0" layoutY="222.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="start-home-btn" stylesheets="@application.css" text="Home">
                                  <graphic>
                                     <ImageView fitHeight="27.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -72,6 +75,9 @@
                                        </image>
                                     </ImageView>
                                  </graphic>
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="12.0" />
+                                 </font>
                               </Button>
                               <Button fx:id="addDocument_button" layoutX="9.0" layoutY="259.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@application.css" text="Manage Documents">
                                  <graphic>
@@ -372,40 +378,50 @@
                         <AnchorPane fx:id="add_form" layoutX="192.0" layoutY="146.0" prefHeight="554.4" prefWidth="901.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="14.0" layoutY="16.0" prefHeight="521.0" prefWidth="265.0" stylesheets="@application.css">
+                                 <children>
+                                    <Label layoutX="12.0" layoutY="17.0" text="Document ID:">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="add_ID" layoutX="101.0" layoutY="14.0" styleClass="textfield" stylesheets="@application.css" />
+                                    <Label layoutX="55.0" layoutY="52.0" text="Title:">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="add_Title" layoutX="100.0" layoutY="49.0" styleClass="textfield" stylesheets="@application.css" />
+                                    <Label layoutX="44.0" layoutY="85.0" text="Author:">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="add_Author" layoutX="100.0" layoutY="82.0" styleClass="textfield" stylesheets="@application.css" />
+                                    <Label layoutX="39.0" layoutY="122.0" text="Quantity:">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="add_Quantity" layoutX="100.0" layoutY="119.0" styleClass="textfield" stylesheets="@application.css" />
+                                    <Button fx:id="add_add" layoutX="16.0" layoutY="159.0" mnemonicParsing="false" onAction="#manageDocument_addButton" prefHeight="42.0" prefWidth="106.0" styleClass="add-btn" stylesheets="@application.css" text="Add" />
+                                    <Button fx:id="add_delete" layoutX="145.0" layoutY="159.0" mnemonicParsing="false" onAction="#manageDocument_deleteButton" prefHeight="42.0" prefWidth="106.0" styleClass="delete-btn" stylesheets="@application.css" text="Delete" />
+                                    <Button fx:id="add_clear" layoutX="16.0" layoutY="210.0" mnemonicParsing="false" onAction="#manageDocument_clearButton" prefHeight="42.0" prefWidth="106.0" styleClass="clear-btn" stylesheets="@application.css" text="Clear" />
+                                    <Button fx:id="add_update" layoutX="145.0" layoutY="210.0" mnemonicParsing="false" onAction="#manageDocument_updateButton" prefHeight="42.0" prefWidth="106.0" styleClass="update-btn" stylesheets="@application.css" text="Update" />
+                                    <AnchorPane layoutX="59.0" layoutY="273.0" prefHeight="180.0" prefWidth="146.0" stylesheets="@application.css">
+                                       <children>
+                                          <ImageView fx:id="imageView_manageDocument" fitHeight="180.0" fitWidth="146.0" pickOnBounds="true" />
+                                       </children>
+                                       <styleClass>
+                                          <String fx:value="white-bg" />
+                                          <String fx:value="shadow" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <Button fx:id="add_clear1" layoutX="79.0" layoutY="465.0" mnemonicParsing="false" onAction="#manageDocument_importButton" prefHeight="42.0" prefWidth="106.0" styleClass="clear-btn" stylesheets="@application.css" text="Import" />
+                                 </children>
                                  <styleClass>
                                     <String fx:value="white-bg" />
                                     <String fx:value="shadow" />
                                  </styleClass>
-                                 <children>
-                                    <Label layoutX="14.0" layoutY="28.0" text="Document ID:">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField fx:id="add_ID" layoutX="103.0" layoutY="25.0" styleClass="textfield" stylesheets="@application.css" />
-                                    <Label layoutX="57.0" layoutY="63.0" text="Title:">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField fx:id="add_Title" layoutX="102.0" layoutY="60.0" styleClass="textfield" stylesheets="@application.css" />
-                                    <Label layoutX="46.0" layoutY="96.0" text="Author:">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField fx:id="add_Author" layoutX="102.0" layoutY="93.0" styleClass="textfield" stylesheets="@application.css" />
-                                    <Label layoutX="41.0" layoutY="133.0" text="Quantity:">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField fx:id="add_Quantity" layoutX="102.0" layoutY="130.0" styleClass="textfield" stylesheets="@application.css" />
-                                    <Button fx:id="add_add" layoutX="16.0" layoutY="193.0" mnemonicParsing="false" onAction="#manageDocument_addButton" prefHeight="42.0" prefWidth="106.0" styleClass="add-btn" stylesheets="@application.css" text="Add" />
-                                    <Button fx:id="add_delete" layoutX="145.0" layoutY="194.0" mnemonicParsing="false" onAction="#manageDocument_deleteButton" prefHeight="42.0" prefWidth="106.0" styleClass="delete-btn" stylesheets="@application.css" text="Delete" />
-                                    <Button fx:id="add_clear" layoutX="16.0" layoutY="261.0" mnemonicParsing="false" onAction="#manageDocument_clearButton" prefHeight="42.0" prefWidth="106.0" styleClass="clear-btn" stylesheets="@application.css" text="Clear" />
-                                    <Button fx:id="add_update" layoutX="145.0" layoutY="261.0" mnemonicParsing="false" onAction="#manageDocument_updateButton" prefHeight="42.0" prefWidth="106.0" styleClass="update-btn" stylesheets="@application.css" text="Update" />
-                                 </children>
                               </AnchorPane>
                               <AnchorPane layoutX="307.0" layoutY="15.0" prefHeight="522.0" prefWidth="588.0" stylesheets="@application.css">
                                  <styleClass>
@@ -425,7 +441,6 @@
                                     </TableView>
                                  </children>
                               </AnchorPane>
-                              <AnchorPane fx:id="home_form" prefHeight="554.4" prefWidth="901.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
                         <AnchorPane fx:id="returnDocument_form" prefHeight="554.4" prefWidth="901.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -492,7 +507,7 @@
                                  </children>
                               </AnchorPane>
                            </children></AnchorPane>
-                        <AnchorPane fx:id="viewRecords_form" prefHeight="554.4" prefWidth="901.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="viewRecords_form" prefHeight="554.4" prefWidth="901.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane fx:id="allRecords_form" layoutX="23.0" layoutY="47.0" prefHeight="487.0" prefWidth="856.0" stylesheets="@application.css">
                                  <styleClass>
@@ -515,11 +530,111 @@
                               </AnchorPane>
                               <AnchorPane layoutX="23.0" layoutY="15.0" prefHeight="32.0" prefWidth="215.0" styleClass="view-records-form" stylesheets="@application.css">
                                  <children>
-                                    <Button fx:id="allRecords_button" layoutX="2.0" layoutY="3.0" mnemonicParsing="false" onAction="#viewRecordsSwitchForm" prefHeight="26.0" prefWidth="76.0" styleClass="view-records-btn" stylesheets="@application.css" text="All Records" textFill="WHITE" />
+                                    <Button fx:id="allRecords_button" layoutX="2.0" layoutY="3.0" mnemonicParsing="false" onAction="#viewRecordsSwitchForm" prefHeight="26.0" prefWidth="76.0" styleClass="start-allrecords-btn" stylesheets="@application.css" text="All Records" textFill="WHITE" />
                                     <Button fx:id="issuedList_button" layoutX="78.0" layoutY="3.0" mnemonicParsing="false" onAction="#viewRecordsSwitchForm" prefHeight="26.0" prefWidth="71.0" styleClass="view-records-btn" stylesheets="@application.css" text="Issued List" textFill="WHITE" />
                                     <Button fx:id="defaulterList_button" layoutX="149.0" layoutY="3.0" mnemonicParsing="false" onAction="#viewRecordsSwitchForm" prefHeight="26.0" prefWidth="86.0" styleClass="view-records-btn" stylesheets="@application.css" text="Defaulter List" textFill="WHITE" />
                                  </children>
                               </AnchorPane>
+                              <Button layoutX="850.0" layoutY="2.0" mnemonicParsing="false" onAction="#deleteButton_viewRecords" prefHeight="40.0" prefWidth="48.0" styleClass="delete3-button" stylesheets="@application.css">
+                                 <graphic>
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@delete.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="home_form" prefHeight="554.4" prefWidth="901.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <AnchorPane layoutX="15.0" layoutY="10.0" prefHeight="171.0" prefWidth="870.0" stylesheets="@application.css">
+                                 <styleClass>
+                                    <String fx:value="white-bg" />
+                                    <String fx:value="shadow" />
+                                 </styleClass>
+                                 <children>
+                                    <AnchorPane layoutX="14.0" layoutY="15.0" prefHeight="143.0" prefWidth="252.0" styleClass="home-bg-top">
+                                       <children>
+                                          <ImageView fitHeight="86.0" fitWidth="73.0" layoutX="6.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@book3.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Label layoutX="43.0" layoutY="102.0" text="Available Documents" textFill="WHITE">
+                                             <font>
+                                                <Font name="System Bold" size="16.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="availableDocuments_home" layoutX="223.0" layoutY="14.0" text="0" textFill="WHITE">
+                                             <font>
+                                                <Font name="System Bold" size="24.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane layoutX="303.0" layoutY="15.0" prefHeight="143.0" prefWidth="252.0" styleClass="home-bg-top">
+                                       <children>
+                                          <ImageView fitHeight="86.0" fitWidth="73.0" layoutX="8.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@book-donation.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Label layoutX="57.0" layoutY="103.0" text="Issued Documents" textFill="WHITE">
+                                             <font>
+                                                <Font name="System Bold" size="16.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="issuedDocument_home" layoutX="223.0" layoutY="14.0" text="0" textFill="WHITE">
+                                             <font>
+                                                <Font name="System Bold" size="24.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane layoutX="595.0" layoutY="15.0" prefHeight="143.0" prefWidth="252.0" styleClass="home-bg-top">
+                                       <children>
+                                          <ImageView fitHeight="86.0" fitWidth="73.0" layoutX="6.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@teamwork.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Label layoutX="66.0" layoutY="103.0" text="Total Borrowers" textFill="WHITE">
+                                             <font>
+                                                <Font name="System Bold" size="16.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="totalBorrowers_home" layoutX="223.0" layoutY="14.0" text="0" textFill="WHITE">
+                                             <font>
+                                                <Font name="System Bold" size="24.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="15.0" layoutY="210.0" prefHeight="340.0" prefWidth="870.0" stylesheets="@application.css">
+                                 <styleClass>
+                                    <String fx:value="white-bg" />
+                                    <String fx:value="shadow" />
+                                 </styleClass>
+                                 <children>
+                                    <ScrollPane layoutX="4.0" layoutY="5.0" prefHeight="330.0" prefWidth="861.0">
+                                       <content>
+                                          <GridPane fx:id="documentContainer" prefHeight="0.0" prefWidth="0.0">
+                                            <rowConstraints>
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                          </GridPane>
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </AnchorPane>
+                              <Label layoutX="15.0" layoutY="185.0" text="Hot Document" textFill="RED">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="16.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </AnchorPane>
                      </children>

@@ -5,16 +5,29 @@ public class Document {
         private String title;
         private String author;
         private int quantity;
+        private String image;
 
-        public Document(int id, String title, String author, int quantity) {
+        public Document() {
+        }
+
+        public Document(int id, String title, String author, int quantity, String image) {
             this.id = id;
             this.title = title;
             this.author = author;
             this.quantity = quantity;
+            this.image = image;
         }
 
         public int getId() {
             return id;
+        }
+
+        public void setImage(String image) {
+            this.image = image;
+        }
+
+        public String getImage() {
+            return image;
         }
 
         public void setId(int id) {

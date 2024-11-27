@@ -20,6 +20,7 @@ public class BorrowTransaction {
         this.status = status;
         this.returnDate = null;
     }
+
     public BorrowTransaction(int transactionId, String documentName, String borrowerName, Date issueDate, Date dueDate, String status, Date returnDate) {
         this.transactionId = transactionId;
         this.documentName = documentName;
