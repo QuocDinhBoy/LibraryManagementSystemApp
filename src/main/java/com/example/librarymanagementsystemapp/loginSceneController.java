@@ -3,6 +3,7 @@ package com.example.librarymanagementsystemapp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -14,9 +15,12 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ResourceBundle;
 
 public class loginSceneController {
     private Stage stage;
@@ -33,10 +37,21 @@ public class loginSceneController {
     private Label loginlabel;
 
     @FXML
-    public void switchToCenterScene(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("centerScene.fxml"));
+    public void switchToAdminScene(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("adminScene.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
+        stage.setScene(scene);
+        stage.centerOnScreen();
+        stage.show();
+    }
+
+    @FXML
+    public void switchToUserScene(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("userScene.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
         stage.setScene(scene);
         stage.centerOnScreen();
         stage.show();
@@ -59,19 +74,26 @@ public class loginSceneController {
             Database connectNow = new Database();
             Connection connectDB = connectNow.getConnection();
 
-            String verifyLogin = "SELECT count(1) FROM user_account WHERE username = '" + usernamefield.getText() + "' AND password = '" + passwordfield.getText() + "'";
+            String verifyLogin = "SELECT account_id, role FROM user_account WHERE username = ? AND password = ?";
             try {
-                Statement statement = connectDB.createStatement();
-                ResultSet queryResult = statement.executeQuery(verifyLogin);
+                PreparedStatement preparedStatement = connectDB.prepareStatement(verifyLogin);
+                preparedStatement.setString(1, usernamefield.getText());
+                preparedStatement.setString(2, passwordfield.getText());
+                ResultSet queryResult = preparedStatement.executeQuery();
 
-                while(queryResult.next()) {
-                    if (queryResult.getInt(1) == 1) {
-                        switchToCenterScene(event);
+                if(queryResult.next()) {
+                    int userId = queryResult.getInt("account_id");
+                    String role = queryResult.getString("role");
+
+                    UserSceneController.getInstance().setUserId(userId);
+                    if ("admin".equals(role)) {
+                        switchToAdminScene(event);
                     } else {
-                        loginlabel.setText("Invalid login. Please try again!");
+                        switchToUserScene(event);
                     }
+                } else {
+                    loginlabel.setText("Invalid login. Please try again!");
                 }
-
             } catch (Exception e) {
                 e.printStackTrace();
                 e.getCause();
@@ -80,6 +102,4 @@ public class loginSceneController {
             loginlabel.setText("Please enter username and password.");
         }
     }
-
-
 }

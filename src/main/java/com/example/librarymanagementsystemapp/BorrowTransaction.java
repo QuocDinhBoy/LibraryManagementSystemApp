@@ -1,31 +1,35 @@
 package com.example.librarymanagementsystemapp;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
 import java.sql.Date;
 
 public class BorrowTransaction {
     private int transactionId;
     private String documentName;
     private String borrowerName;
-    private Date issueDate;
+    private Date borrowDate;
     private Date dueDate;
     private String status;
     private Date returnDate;
+    private SimpleBooleanProperty selected;
 
-    public BorrowTransaction(int transactionId, String documentName, String borrowerName, Date issueDate, Date dueDate, String status) {
+    public BorrowTransaction(int transactionId, String documentName, String borrowerName, Date borrowDate, Date dueDate, String status) {
         this.transactionId = transactionId;
         this.documentName = documentName;
         this.borrowerName = borrowerName;
-        this.issueDate = issueDate;
+        this.borrowDate = borrowDate;
         this.dueDate = dueDate;
         this.status = status;
-        this.returnDate = null;
+        this.selected = new SimpleBooleanProperty(false);
     }
 
-    public BorrowTransaction(int transactionId, String documentName, String borrowerName, Date issueDate, Date dueDate, String status, Date returnDate) {
+    public BorrowTransaction(int transactionId, String documentName, String borrowerName, Date borrowDate, Date dueDate, String status, Date returnDate) {
         this.transactionId = transactionId;
         this.documentName = documentName;
         this.borrowerName = borrowerName;
-        this.issueDate = issueDate;
+        this.borrowDate = borrowDate;
         this.dueDate = dueDate;
         this.status = status;
         this.returnDate = returnDate;
@@ -35,8 +39,16 @@ public class BorrowTransaction {
         return returnDate;
     }
 
-    public void setReturnDate(Date returnDate) {
-        this.returnDate = returnDate;
+    public SimpleBooleanProperty getSelected() {
+        return selected;
+    }
+
+    public boolean isSelected() {
+        return selected.get();
+    }
+
+    public void setSelected(Boolean selected) {
+        this.selected.set(selected);
     }
 
     public int getTransactionId() {
@@ -63,12 +75,12 @@ public class BorrowTransaction {
         this.documentName = documentName;
     }
 
-    public Date getIssueDate() {
-        return issueDate;
+    public Date getBorrowDate() {
+        return borrowDate;
     }
 
-    public void setIssueDate(Date issueDate) {
-        this.issueDate = issueDate;
+    public void setBorrowDate(Date borrowDate) {
+        this.borrowDate = borrowDate;
     }
 
     public Date getDueDate() {

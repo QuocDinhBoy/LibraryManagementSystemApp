@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="325.0" prefWidth="170.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagementsystemapp.DocumentController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="308.0" prefWidth="170.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagementsystemapp.DocumentController">
    <children>
-      <ImageView fx:id="documentImage" fitHeight="230.0" fitWidth="150.0" pickOnBounds="true">
+      <ImageView fx:id="documentImage" fitHeight="210.0" fitWidth="150.0" pickOnBounds="true">
          <image>
             <Image url="@Image/crimeandpunishment.jpg" />
          </image>
@@ -24,7 +24,7 @@
                </font>
             </Label>
             <Label fx:id="documentAuthor" text="Fyodor Dostoevsky" />
-            <Button fx:id="addButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="151.0" styleClass="add-btn" stylesheets="@application.css" text="ADD" />
+            <Button fx:id="addButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="151.0" styleClass="update-btn" stylesheets="@application.css" text="Borrow" />
          </children>
       </VBox>
    </children>
@@ -33,6 +33,6 @@
    </padding>
    <styleClass>
       <String fx:value="white-bg" />
-      <String fx:value="shadow" />
+      <String fx:value="shadow2" />
    </styleClass>
 </VBox>

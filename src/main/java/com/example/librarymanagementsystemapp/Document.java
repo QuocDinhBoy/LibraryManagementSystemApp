@@ -4,16 +4,18 @@ public class Document {
         private int id;
         private String title;
         private String author;
+        private String genre;
         private int quantity;
         private String image;
 
         public Document() {
         }
 
-        public Document(int id, String title, String author, int quantity, String image) {
+        public Document(int id, String title, String author, String genre, int quantity, String image) {
             this.id = id;
             this.title = title;
             this.author = author;
+            this.genre = genre;
             this.quantity = quantity;
             this.image = image;
         }
@@ -56,5 +58,13 @@ public class Document {
 
         public void setQuantity(int quantity) {
             this.quantity = quantity;
+        }
+
+        public String getGenre() {
+            return genre;
+        }
+
+        public void setGenre(String genre) {
+            this.genre = genre;
         }
 }

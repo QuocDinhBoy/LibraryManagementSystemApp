@@ -19,7 +19,7 @@
                <children>
                   <ImageView fitHeight="134.0" fitWidth="152.0" layoutX="83.0" layoutY="90.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@photo-library-icon-3.jpg" />
+                        <Image url="@Image/photo-library-icon-3.jpg" />
                      </image>
                   </ImageView>
                   <Label layoutX="18.0" layoutY="232.0" text="Library Management System" textFill="WHITE">
