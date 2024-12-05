@@ -4,14 +4,23 @@ package com.example.librarymanagementsystemapp;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.locks.StampedLock;
 
 public class DocumentDetails2Controller {
@@ -37,6 +46,15 @@ public class DocumentDetails2Controller {
     @FXML
     private Button borrowButton;
 
+    @FXML
+    private Button sendCommentButton;
+
+    @FXML
+    private TextField comment;
+
+    @FXML
+    private GridPane commentContainer;
+
     public void setDocument(Document document, Stage stage) {
         documentTitle.setText(document.getTitle());
         documentAuthor.setText("Author: " + document.getAuthor());
@@ -50,7 +68,84 @@ public class DocumentDetails2Controller {
         String formattedDate = today.format(formatter);
         borrowDate.setText(formattedDate);
         borrowButton.setOnAction(event-> setBorrowButton(document, stage));
+        sendCommentButton.setOnAction(event->setSendCommentButton(document));
+        showComment(commentList(document));
     }
+
+    public void setSendCommentButton(Document document) {
+        Database connectNow = new Database();
+        Connection connection = connectNow.getConnection();
+
+        String sql = "INSERT INTO comment (document_id, account_id , comment) VALUES(?,?,?)";
+
+        try {
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, document.getId());
+            preparedStatement.setInt(2, UserSceneController.getInstance().getUserId());
+            preparedStatement.setString(3, comment.getText());
+            preparedStatement.executeUpdate();
+            showComment(commentList(document));
+            comment.clear();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private List<Comment> commentList(Document document) {
+        List<Comment> commentList = new ArrayList<>();
+        String sql = "SELECT c.comment, CONCAT(ua.firstname, ' ', ua.lastname) as name, ua.image\n" +
+                "FROM comment c\n" +
+                "JOIN document d ON d.document_id = c.document_id\n" +
+                "JOIN user_account ua ON ua.account_id = c.account_id\n" +
+                "WHERE d.document_id = " + document.getId();
+
+        Database connectNow = new Database();
+        Connection connect = connectNow.getConnection();
+
+        try (Statement statement = connect.createStatement();
+             ResultSet result = statement.executeQuery(sql)) {
+
+            while (result.next()) {
+                Comment comment = new Comment(
+                        result.getString("image"),
+                        result.getString("name"),
+                        result.getString("comment")
+                );
+                commentList.add(comment);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return commentList;
+    }
+    private List<Comment> commentList;
+
+    public void showComment(List<Comment> commentList) {
+        int column = 0;
+        int row = 1;
+
+        try {
+            for (Comment comment : commentList) {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("comment.fxml"));
+                AnchorPane commentBox = fxmlLoader.load();
+                CommentController commentController = fxmlLoader.getController();
+                commentController.setData(comment);
+                if(column == 1) {
+                    column = 0;
+                    ++row;
+                }
+
+                commentContainer.add(commentBox, column++, row);
+                GridPane.setMargin(commentBox, new Insets(7,15,20,15));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void addTransactionToDatabase(Document document, Stage stage) {
         int userId = UserSceneController.getInstance().getUserId();
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -8,9 +9,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagementsystemapp.RegistrationSceneController">
+<AnchorPane fx:id="main_form" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="617.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagementsystemapp.RegistrationSceneController">
    <children>
-      <AnchorPane prefHeight="50.0" prefWidth="600.0" stylesheets="@application.css">
+      <AnchorPane layoutY="54.0" prefHeight="50.0" prefWidth="600.0" stylesheets="@application.css">
          <styleClass>
             <String fx:value="left1" />
             <String fx:value="shadow" />
@@ -23,7 +24,7 @@
             </Label>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="20.0" layoutY="70.0" prefHeight="460.0" prefWidth="560.0" stylesheets="@application.css">
+      <AnchorPane layoutX="20.0" layoutY="132.0" prefHeight="460.0" prefWidth="560.0" stylesheets="@application.css">
          <styleClass>
             <String fx:value="shadow" />
             <String fx:value="white-bg" />
@@ -91,6 +92,30 @@
             </Button>
             <Label fx:id="confirmpasswordmessage" layoutX="246.0" layoutY="269.0" textFill="RED" />
             <Label fx:id="succesfullmessage" layoutX="179.0" layoutY="10.0" textFill="RED" />
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="54.0" prefWidth="600.0" styleClass="semi-top-form" stylesheets="@application.css">
+         <children>
+            <AnchorPane prefHeight="34.0" prefWidth="600.0" styleClass="top-form" stylesheets="@application.css">
+               <children>
+                  <FontAwesomeIcon glyphName="BOOK" layoutX="14.0" layoutY="24.0" size="1.5em" text="" />
+                  <Label layoutX="37.0" layoutY="7.0" text="Library Management System">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="498.0" layoutY="1.0" mnemonicParsing="false" onAction="#minimize" prefHeight="25.0" prefWidth="50.0" styleClass="minimize" stylesheets="@application.css">
+                     <graphic>
+                        <FontAwesomeIcon glyphName="MINUS" />
+                     </graphic>
+                  </Button>
+                  <Button layoutX="549.0" layoutY="1.0" mnemonicParsing="false" onAction="#close" prefHeight="25.0" prefWidth="50.0" styleClass="close" stylesheets="@application.css">
+                     <graphic>
+                        <FontAwesomeIcon glyphName="CLOSE" onDragDetected="#close" text="" />
+                     </graphic>
+                  </Button>
+               </children>
+            </AnchorPane>
          </children>
       </AnchorPane>
    </children>

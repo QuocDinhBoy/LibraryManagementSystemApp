@@ -11,6 +11,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -146,6 +147,7 @@ public class UserSceneController implements Initializable {
 
     @FXML
     private Label labelWrongConfirm;
+
 
     private static UserSceneController instance;
 
@@ -329,6 +331,8 @@ public class UserSceneController implements Initializable {
         int column = 0;
         int row = 1;
 
+        documentContainer.getChildren().clear();
+
         try {
             for (Document document : search) {
                 FXMLLoader fxmlLoader = new FXMLLoader();
@@ -347,6 +351,59 @@ public class UserSceneController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void showTopBooksInContainer(List<Document> topBooks) {
+        documentContainer.getChildren().clear();
+
+        int column = 0;
+        int row = 1;
+
+        try {
+            for (Document document : topBooks) {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("document2.fxml"));
+                VBox documentBox = fxmlLoader.load();
+                DocumentController documentController = fxmlLoader.getController();
+                documentController.setData(document);
+
+                if (column == 5) {
+                    column = 0;
+                    ++row;
+                }
+
+                documentContainer.add(documentBox, column++, row);
+                GridPane.setMargin(documentBox, new Insets(7, 15, 20, 25));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private List<Document> getTop10MostBorrowedBooks() throws SQLException {
+        List<Document> topBooks = new ArrayList<>();
+        String sql = "SELECT d.title, COUNT(bt.document_id) AS borrow_count\n" +
+                "                 FROM borrowtransaction bt \n" +
+                "                 JOIN document d ON bt.document_id = d.document_id \n" +
+                "                 GROUP BY bt.document_id \n" +
+                "                 ORDER BY borrow_count DESC LIMIT 10;";
+
+        Database connectNow = new Database();
+        Connection connection = connectNow.getConnection();
+
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
+            while (resultSet.next()) {
+                Document document = new Document(
+
+                );
+                topBooks.add(document);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return topBooks;
     }
 
     public void showMyDocumentList() {
@@ -681,7 +738,6 @@ public class UserSceneController implements Initializable {
             }
         }
     }
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

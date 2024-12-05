@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -35,6 +36,19 @@ public class loginSceneController {
 
     @FXML
     private Label loginlabel;
+
+    @FXML
+    private AnchorPane main_form;
+
+    public void close() {
+        System.exit(0);
+    }
+
+    public void minimize() {
+        Stage stage = (Stage) main_form.getScene().getWindow();
+        stage.setIconified(true);
+    }
+
 
     @FXML
     public void switchToAdminScene(ActionEvent event) throws IOException {

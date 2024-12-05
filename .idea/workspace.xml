@@ -5,51 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ee85c5d4-79d4-40a4-b2dd-b8f6578f8f47" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/CardController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/Document2Controller.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/DocumentDetails2Controller.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/GoogleBooksAPI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/MyDocument.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/card.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/document2.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/documentDetails.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/documentDetails2.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/userScene.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/Comment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/CommentController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/comment.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/BorrowTransaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/BorrowTransaction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/Borrower.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/Document.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/Document.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/CardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/CardController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/DocumentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/DocumentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/DocumentDetails2Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/DocumentDetails2Controller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/HelloApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/centerSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/adminSceneController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/RegistrationSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/RegistrationSceneController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/UserSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/UserSceneController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/adminSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/adminSceneController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/loginSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/loginSceneController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/OIP.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/Image/OIP.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/application.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/application.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/back.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/Image/back.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/bin.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/Image/bin.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/book-donation.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/Image/book-donation.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/book.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/Image/book.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/book2.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/Image/book2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/book3.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/Image/book3.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/centerScene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/adminScene.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/contracts.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/Image/contracts.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/crimeandpunishment.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/Image/crimeandpunishment.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/criminal-record.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/Image/criminal-record.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/default_image.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/Image/default_image.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/delete.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/Image/delete.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/document.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/document.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/father.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/Image/father.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/home.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/Image/home.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/adminScene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/adminScene.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/documentDetails2.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/documentDetails2.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/loginScene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/loginScene.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/management.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/Image/management.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/open-book.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/Image/open-book.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/photo-library-icon-3.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/Image/photo-library-icon-3.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/return.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/Image/return.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/returnbook.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/Image/returnbook.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/schedule.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/Image/schedule.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/teamwork.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/Image/teamwork.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/registrationScene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/librarymanagementsystemapp/registrationScene.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,25 +101,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/UserSceneController.java</url>
-          <line>408</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/com/example/librarymanagementsystemapp/HelloApplication.java</url>
-          <line>21</line>
-          <properties class="com.example.librarymanagementsystemapp.HelloApplication" method="main">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

@@ -13,6 +13,9 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -240,6 +243,15 @@ public class adminSceneController implements Initializable {
     private Button manageUsers_button;
 
     @FXML
+    private PieChart home_pieChart;
+
+    @FXML
+    private BarChart<String, Number> barChart;
+
+    @FXML
+    private Label totalUsers_home;
+
+    @FXML
     public void switchLoginScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("loginScene.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -289,7 +301,6 @@ public class adminSceneController implements Initializable {
 
             availableDocuments_home();
             issuedDocuments_home();
-            hottest_home();
         } else if (event.getSource() == addDocument_button) {
             home_form.setVisible(false);
             addDocument_form.setVisible(true);
@@ -402,7 +413,7 @@ public class adminSceneController implements Initializable {
     }
 
     public void issuedDocuments_home() {
-        String sql = "SELECT COUNT(borrowtransaction_id) FROM borrowtransaction WHERE status != 'returned'";
+        String sql = "SELECT COUNT(DISTINCT document_id) FROM borrowtransaction WHERE status != 'returned'";
 
         Database connectNow = new Database();
         connect = connectNow.getConnection();
@@ -412,7 +423,7 @@ public class adminSceneController implements Initializable {
             result = statement.executeQuery(sql);
             int count = 0;
             while (result.next()) {
-                count = result.getInt("COUNT(borrowtransaction_id)");
+                count = result.getInt("COUNT(DISTINCT document_id)");
             }
             issuedDocument_home.setText(String.valueOf(count));
         } catch (Exception e) {
@@ -420,8 +431,24 @@ public class adminSceneController implements Initializable {
         }
     }
 
-    private List<Document> hotest;
+    public void totalUser_home() {
+        String sql = "SELECT COUNT(account_id) FROM user_account WHERE role is null";
 
+        Database connectNow = new Database();
+        connect = connectNow.getConnection();
+
+        try {
+            statement = connect.createStatement();
+            result = statement.executeQuery(sql);
+            int count = 0;
+            while (result.next()) {
+                count = result.getInt("COUNT(account_id)");
+            }
+            totalUsers_home.setText(String.valueOf(count));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     private List<Document> documents() {
         List<Document> documentList = new ArrayList<>();
         String sql = "SELECT d.document_id, d.title, d.author, d.quantity, d.image, d.genre, COUNT(bt.document_id) AS borrow_count " +
@@ -455,30 +482,6 @@ public class adminSceneController implements Initializable {
         return documentList;
     }
 
-    public void hottest_home() {
-        hotest = documents();
-        int column = 0;
-        int row = 1;
-
-        try {
-            for (Document document : hotest) {
-                FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(getClass().getResource("document.fxml"));
-                VBox documentBox = fxmlLoader.load();
-                DocumentController documentController = fxmlLoader.getController();
-                documentController.setData(document);
-                if(column == 5) {
-                    column = 0;
-                    ++row;
-                }
-
-                documentContainer.add(documentBox, column++, row);
-                GridPane.setMargin(documentBox, new Insets(7,15,20,25));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     public void search_GoogleAPI() {
         String query = searchDocument.getText();
@@ -1219,6 +1222,64 @@ public class adminSceneController implements Initializable {
         returnDate_viewRecords.setResizable(false);
     }
 
+    public void showPieChart() {
+        int onTime = 0;
+        int late = 0;
+
+        String sql = "SELECT \n" +
+                "    SUM(CASE WHEN due_date >= return_date THEN 1 ELSE 0 END) AS on_time,\n" +
+                "    SUM(CASE WHEN due_date < return_date THEN 1 ELSE 0 END) AS late\n" +
+                "FROM borrowtransaction\n" +
+                "WHERE status = 'Returned';";
+
+        Database connectNow = new Database();
+        Connection connection = connectNow.getConnection();
+
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            if(resultSet.next()) {
+                onTime = resultSet.getInt("on_time");
+                late = resultSet.getInt("late");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        ObservableList<PieChart.Data> pieData = FXCollections.observableArrayList(
+                new PieChart.Data("Returned On Time", onTime),
+                new PieChart.Data("Returned Late", late)
+        );
+        home_pieChart.setData(pieData);
+    }
+
+    public void showBarChart() {
+         Database connectNow = new Database();
+         Connection connection = connectNow.getConnection();
+         String sql = "SELECT d.genre, COUNT(bt.borrowtransaction_id) AS borrow_count\n" +
+                 "FROM borrowtransaction bt\n" +
+                 "JOIN document d ON bt.document_id = d.document_id\n" +
+                 "GROUP BY d.genre;";
+         try {
+             Statement statement = connection.createStatement();
+             ResultSet resultSet =  statement.executeQuery(sql);
+
+             XYChart.Series<String, Number> dataSeries = new XYChart.Series<>();
+             dataSeries.setName("Borrowed book");
+
+             while(resultSet.next()) {
+                 String genre = resultSet.getString("genre");
+                 int borrowCount = resultSet.getInt("borrow_count");
+
+                 dataSeries.getData().add(new XYChart.Data<>(genre, borrowCount));
+             }
+             barChart.getData().add(dataSeries);
+         } catch (Exception e) {
+             e.printStackTrace();
+         }
+    }
+
     @FXML
     public void initialize (URL Location, ResourceBundle resources) {
         showListDocument();
@@ -1226,11 +1287,14 @@ public class adminSceneController implements Initializable {
         showUserList();
         availableDocuments_home();
         issuedDocuments_home();
+        totalUser_home();
         manageDocumentSelected();
         showBorrowTransactionList();
         searchDocument();
         searchUser();
         checkViewRecords = AllRecords;
+        showPieChart();
+        showBarChart();
     }
 
 }

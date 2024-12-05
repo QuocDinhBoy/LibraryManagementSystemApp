@@ -8,6 +8,8 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
@@ -39,13 +41,20 @@
          </children>
       </VBox>
       <Line endX="-2.20001220703125" endY="346.20001220703125" layoutX="375.0" layoutY="121.0" startX="-2.20001220703125" startY="-106.60000610351562" />
-      <TextField layoutX="396.0" layoutY="407.0" prefHeight="54.0" prefWidth="242.0" />
+      <TextField fx:id="comment" alignment="TOP_LEFT" layoutX="396.0" layoutY="407.0" prefHeight="54.0" prefWidth="242.0" />
       <Button fx:id="borrowButton" layoutX="298.0" layoutY="491.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="147.0" styleClass="update-btn" stylesheets="@application.css" text="Borrow" />
-      <ScrollPane layoutX="396.0" layoutY="35.0" prefHeight="324.0" prefWidth="330.0" />
+      <ScrollPane layoutX="396.0" layoutY="35.0" prefHeight="330.0" prefWidth="330.0">
+         <content>
+            <GridPane fx:id="commentContainer" prefHeight="2.0" prefWidth="0.0">
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+         </content></ScrollPane>
       <Label layoutX="24.0" layoutY="413.0" text="Borrow Date:" />
       <TextField fx:id="borrowDate" editable="false" layoutX="108.0" layoutY="409.0" />
       <DatePicker fx:id="dueDate" layoutX="105.0" layoutY="445.0" />
       <Label layoutX="40.0" layoutY="449.0" text="Due Date:" />
-      <Button layoutX="645.0" layoutY="417.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="Send Comment" />
+      <Button fx:id="sendCommentButton" layoutX="645.0" layoutY="417.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="Send Comment" />
    </children>
 </AnchorPane>

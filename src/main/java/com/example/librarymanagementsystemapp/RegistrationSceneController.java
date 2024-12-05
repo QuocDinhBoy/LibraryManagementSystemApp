@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -35,6 +36,18 @@ public class RegistrationSceneController {
 
     @FXML
     private Label confirmpasswordmessage;
+
+    @FXML
+    private AnchorPane main_form;
+
+    public void close() {
+        System.exit(0);
+    }
+
+    public void minimize() {
+        Stage stage = (Stage) main_form.getScene().getWindow();
+        stage.setIconified(true);
+    }
 
     @FXML
     public void switchLoginScene(ActionEvent event) throws IOException {
