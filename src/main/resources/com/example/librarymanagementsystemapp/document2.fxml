@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="308.0" prefWidth="170.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagementsystemapp.DocumentController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="308.0" prefWidth="170.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagementsystemapp.Document2Controller">
    <children>
       <ImageView fx:id="documentImage" fitHeight="210.0" fitWidth="150.0" pickOnBounds="true">
          <image>
@@ -24,7 +24,7 @@
                </font>
             </Label>
             <Label fx:id="documentAuthor" text="Fyodor Dostoevsky" />
-            <Button fx:id="addButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="151.0" styleClass="update-btn" stylesheets="@application.css" text="Borrow" />
+            <Button fx:id="borrowButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="151.0" styleClass="update-btn" stylesheets="@application.css" text="Borrow" />
          </children>
       </VBox>
    </children>

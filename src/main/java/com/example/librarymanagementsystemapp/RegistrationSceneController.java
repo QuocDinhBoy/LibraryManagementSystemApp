@@ -98,9 +98,11 @@ public class RegistrationSceneController {
         String lastname = lastnameField.getText();
         String username = usernameField.getText();
         String password = passwordField.getText();
+        String image = "D:/Code/Java/LibraryManagementSystemApp/src/main/resources/com/example/librarymanagementsystemapp/Image/profile-user.png";
 
-        String insertFields = "INSERT INTO user_account(firstname, lastname, username, password) VALUES ('";
-        String insertValues = firstname + "','" + lastname + "','" + username + "','" + password + "')";
+
+        String insertFields = "INSERT INTO user_account(firstname, lastname, username, password, image) VALUES ('";
+        String insertValues = firstname + "','" + lastname + "','" + username + "','" + password + "','" + image + "')";
         String insertToRegister = insertFields + insertValues;
 
         try {

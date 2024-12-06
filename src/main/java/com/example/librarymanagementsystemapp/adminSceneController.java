@@ -25,13 +25,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.application.Platform;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
@@ -99,9 +97,6 @@ public class adminSceneController implements Initializable {
     private Button allRecords_button;
 
     @FXML
-    private Button issuedList_button;
-
-    @FXML
     private Button defaulterList_button;
 
     @FXML
@@ -128,23 +123,12 @@ public class adminSceneController implements Initializable {
     @FXML
     private TableColumn<BorrowTransaction, Date> returnDate_viewRecords;
 
-    @FXML
-    private ImageView imageView_manageDocument;
 
     @FXML
     private Label availableDocuments_home;
 
     @FXML
     private Label issuedDocument_home;
-
-    @FXML
-    private Label totalBorrowers_home;
-
-    @FXML
-    private GridPane documentContainer;
-
-    @FXML
-    private ComboBox add_Genre;
 
     @FXML
     private GridPane documentContainer2;
@@ -413,7 +397,7 @@ public class adminSceneController implements Initializable {
     }
 
     public void issuedDocuments_home() {
-        String sql = "SELECT COUNT(DISTINCT document_id) FROM borrowtransaction WHERE status != 'returned'";
+        String sql = "SELECT COUNT(DISTINCT document_id) FROM borrowtransaction";
 
         Database connectNow = new Database();
         connect = connectNow.getConnection();
@@ -601,7 +585,6 @@ public class adminSceneController implements Initializable {
         manage_author.clear();
         manage_genre.clear();
         manage_quantity.clear();
-        manage_image.setImage(null);
     }
 
     public void deleteDocument() {
@@ -770,7 +753,6 @@ public class adminSceneController implements Initializable {
                                     PreparedStatement statement1 = connect.prepareStatement(sql);
                                     statement1.executeUpdate();
                                     showListDocument();
-                                    manage_clearButton();
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -1183,6 +1165,19 @@ public class adminSceneController implements Initializable {
         Connection connect = connectNow.getConnection();
 
         try {
+            String checkStatusQuery = "SELECT status, document_id FROM borrowtransaction WHERE borrowtransaction_id = ?";
+            PreparedStatement checkStatusStmt = connect.prepareStatement(checkStatusQuery);
+            checkStatusStmt.setInt(1, transaction.getTransactionId());
+            ResultSet resultSet = checkStatusStmt.executeQuery();
+
+            String status = "";
+            int documentId = -1;
+
+            if (resultSet.next()) {
+                status = resultSet.getString("status");
+                documentId = resultSet.getInt("document_id");
+            }
+
             String deleteTransaction = "DELETE FROM borrowtransaction WHERE borrowtransaction_id = '" + transaction.getTransactionId() + "'";
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Comfirmation Message");
@@ -1190,6 +1185,13 @@ public class adminSceneController implements Initializable {
             alert.setContentText("Are you sure you want to delete this transaction ?");
             Optional<ButtonType> option = alert.showAndWait();
             if (option.get().equals(ButtonType.OK)) {
+                if ("Borrowing".equalsIgnoreCase(status) || "Pending".equalsIgnoreCase(status)) {
+                    String updateDocumentQuantity = "UPDATE document SET quantity = quantity + 1 WHERE document_id = ?";
+                    PreparedStatement updateStmt = connect.prepareStatement(updateDocumentQuantity);
+                    updateStmt.setInt(1, documentId);
+                    updateStmt.executeUpdate();
+                }
+
                 statement = connect.createStatement();
                 statement.executeUpdate(deleteTransaction);
                 if(checkViewRecords == AllRecords) {
@@ -1228,9 +1230,9 @@ public class adminSceneController implements Initializable {
 
         String sql = "SELECT \n" +
                 "    SUM(CASE WHEN due_date >= return_date THEN 1 ELSE 0 END) AS on_time,\n" +
-                "    SUM(CASE WHEN due_date < return_date THEN 1 ELSE 0 END) AS late\n" +
+                "    SUM(CASE WHEN due_date < return_date OR (status = 'Borrowing' AND due_date < CURDATE()) THEN 1 ELSE 0 END) AS late\n" +
                 "FROM borrowtransaction\n" +
-                "WHERE status = 'Returned';";
+                "WHERE status IN ('Returned', 'Borrowing');\n";
 
         Database connectNow = new Database();
         Connection connection = connectNow.getConnection();

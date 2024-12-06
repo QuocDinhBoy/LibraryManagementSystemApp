@@ -11,7 +11,6 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -40,8 +39,6 @@ public class UserSceneController implements Initializable {
     private String[] genderList ={"Male", "Female", "Other"};
     ObservableList<MyDocument> myDocumentList;
 
-    @FXML
-    private Button addDocument_button;
 
     @FXML
     private HBox cardLayOut;
@@ -57,9 +54,6 @@ public class UserSceneController implements Initializable {
 
     @FXML
     private TextField searchDocument;
-
-    @FXML
-    private Button searchDocument_button;
 
     @FXML
     private GridPane documentContainer;
@@ -338,7 +332,7 @@ public class UserSceneController implements Initializable {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("document2.fxml"));
                 VBox documentBox = fxmlLoader.load();
-                DocumentController documentController = fxmlLoader.getController();
+                Document2Controller documentController = fxmlLoader.getController();
                 documentController.setData(document);
                 if(column == 5) {
                     column = 0;
@@ -364,8 +358,9 @@ public class UserSceneController implements Initializable {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("document2.fxml"));
                 VBox documentBox = fxmlLoader.load();
-                DocumentController documentController = fxmlLoader.getController();
-                documentController.setData(document);
+
+                Document2Controller documentController2 = fxmlLoader.getController();
+                documentController2.setData(document);
 
                 if (column == 5) {
                     column = 0;
@@ -380,9 +375,9 @@ public class UserSceneController implements Initializable {
         }
     }
 
-    private List<Document> getTop10MostBorrowedBooks() throws SQLException {
+    private List<Document> getTop10MostBorrowedBooks()  {
         List<Document> topBooks = new ArrayList<>();
-        String sql = "SELECT d.title, COUNT(bt.document_id) AS borrow_count\n" +
+        String sql = "SELECT d.document_id, d.title, d.image, d.genre, d.quantity,d.author , COUNT(bt.document_id) AS borrow_count\n" +
                 "                 FROM borrowtransaction bt \n" +
                 "                 JOIN document d ON bt.document_id = d.document_id \n" +
                 "                 GROUP BY bt.document_id \n" +
@@ -395,7 +390,12 @@ public class UserSceneController implements Initializable {
              ResultSet resultSet = statement.executeQuery(sql)) {
             while (resultSet.next()) {
                 Document document = new Document(
-
+                        resultSet.getInt("document_id"),
+                        resultSet.getString("title"),
+                        resultSet.getString("author"),
+                        resultSet.getString("genre"),
+                        resultSet.getInt("quantity"),
+                        resultSet.getString("image")
                 );
                 topBooks.add(document);
             }
@@ -746,5 +746,6 @@ public class UserSceneController implements Initializable {
         setImage();
         setGenderList();
         setDefaultProfile();
+        showTopBooksInContainer(getTop10MostBorrowedBooks());
     }
 }
